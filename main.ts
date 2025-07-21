@@ -1,8 +1,4 @@
-enum ActionKind {
-    Walking,
-    Idle,
-    Jumping
-}
+
 namespace SpriteKind {
     export const TitleScreen = SpriteKind.create()
     export const flame = SpriteKind.create()
@@ -5051,6 +5047,7 @@ if (startscreen2 = true) {
             pause(500)
             tiles.setCurrentTilemap(tilemap`level2`)
             hearts = sprites.create(assets.image`hearts`, SpriteKind.Player)
+            hearts.setPosition(0, 0)
             doodyWolfFightOn = true
             character = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
@@ -5075,7 +5072,7 @@ if (startscreen2 = true) {
             scene.cameraFollowSprite(character)
             character.setPosition(68, 54)
             doodywolf = sprites.create(assets.image`doody wolf sprite`, SpriteKind.Enemy)
-            doodywolf.follow(character, 65)
+            doodywolf.follow(character, 30)
             if (character.overlapsWith(doodywolf)) {
             	
             }
