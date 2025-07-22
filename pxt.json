@@ -9,7 +9,8 @@
         "palette": "*",
         "Color Fading": "github:jwunderl/pxt-color#v0.2.3",
         "pxt-arcade-image-transform": "github:robo-technical-group/pxt-arcade-image-transform#v1.0.9",
-        "sprite-scaling": "*"
+        "sprite-scaling": "*",
+        "arcade-story": "github:microsoft/arcade-storytelling#v1.0.3"
     },
     "files": [
         "main.blocks",

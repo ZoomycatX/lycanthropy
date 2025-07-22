@@ -1,8 +1,13 @@
-
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace SpriteKind {
     export const TitleScreen = SpriteKind.create()
     export const flame = SpriteKind.create()
     export const Text = SpriteKind.create()
+    export const ground_loot = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (doodyWolfFightOn == true) {
@@ -4519,17 +4524,17 @@ function walk () {
         animation.runImageAnimation(
         character,
         [img`
-            . . . . . . f f f f . . . . . . 
-            . . . . f f e e e e f f . . . . 
-            . . . f e e e f f e e e f . . . 
-            . . f f f f f 2 2 f f f f f . . 
-            . . f f e 2 e 2 2 e 2 e f f . . 
-            . . f e 2 f 2 f f 2 f 2 e f . . 
-            . . f f f 2 2 e e 2 2 f f f . . 
-            . f f e f 2 f e e f 2 f e f f . 
-            . f e e f f e e e e f e e e f . 
-            . . f e e e e e e e e e e f . . 
-            . . . f e e e e e e e e f . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . f f f f f f . . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . 4 f f f f f f 4 . . . . 
+            . . . e 4 4 4 4 4 4 4 4 e . . . 
             . . e 4 f f f f f f f f 4 e . . 
             . . 4 d f 2 2 2 2 2 2 f d 4 . . 
             . . 4 4 f 4 4 4 4 4 4 f 4 4 . . 
@@ -4537,33 +4542,33 @@ function walk () {
             . . . . . f f . . f f . . . . . 
             `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f . . . . . . 
-            . . . . f f e e e e f f . . . . 
-            . . . f e e e f f e e e f . . . 
-            . . . f f f f 2 2 f f f f . . . 
-            . . f f e 2 e 2 2 e 2 e f f . . 
-            . . f e 2 f 2 f f f 2 f e f . . 
-            . . f f f 2 f e e 2 2 f f f . . 
-            . . f e 2 f f e e 2 f e e f . . 
-            . f f e f f e e e f e e e f f . 
-            . f f e e e e e e e e e e f f . 
-            . . . f e e e e e e e e f . . . 
-            . . . e f f f f f f f f 4 e . . 
-            . . . 4 f 2 2 2 2 2 e d d 4 . . 
-            . . . e f f f f f f e e 4 . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . f f f f f f . . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . 4 f f f f f f 4 . . . . 
+            . . . e 4 4 4 4 4 4 4 4 e . . . 
+            . . . e f f f f f f f e e e . . 
+            . . . 4 f 2 2 2 2 2 e 4 4 e . . 
+            . . . e f f f f f f f e e . . . 
             . . . . f f f . . . . . . . . . 
             `,img`
-            . . . . . . f f f f . . . . . . 
-            . . . . f f e e e e f f . . . . 
-            . . . f e e e f f e e e f . . . 
-            . . f f f f f 2 2 f f f f f . . 
-            . . f f e 2 e 2 2 e 2 e f f . . 
-            . . f e 2 f 2 f f 2 f 2 e f . . 
-            . . f f f 2 2 e e 2 2 f f f . . 
-            . f f e f 2 f e e f 2 f e f f . 
-            . f e e f f e e e e f e e e f . 
-            . . f e e e e e e e e e e f . . 
-            . . . f e e e e e e e e f . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . f f f f f f . . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . 4 f f f f f f 4 . . . . 
+            . . . e 4 4 4 4 4 4 4 4 e . . . 
             . . e 4 f f f f f f f f 4 e . . 
             . . 4 d f 2 2 2 2 2 2 f d 4 . . 
             . . 4 4 f 4 4 4 4 4 4 f 4 4 . . 
@@ -4571,20 +4576,20 @@ function walk () {
             . . . . . f f . . f f . . . . . 
             `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f . . . . . . 
-            . . . . f f e e e e f f . . . . 
-            . . . f e e e f f e e e f . . . 
-            . . . f f f f 2 2 f f f f . . . 
-            . . f f e 2 e 2 2 e 2 e f f . . 
-            . . f e f 2 f f f 2 f 2 e f . . 
-            . . f f f 2 2 e e f 2 f f f . . 
-            . . f e e f 2 e e f f 2 e f . . 
-            . f f e e e f e e e f f e f f . 
-            . f f e e e e e e e e e e f f . 
-            . . . f e e e e e e e e f . . . 
-            . . e 4 f f f f f f f f e . . . 
-            . . 4 d d e 2 2 2 2 2 f 4 . . . 
-            . . . 4 e e f f f f f f e . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . f f f f f f . . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . f f f f f f f f . . . . 
+            . . . . 4 f f f f f f 4 . . . . 
+            . . . e 4 4 4 4 4 4 4 4 f . . . 
+            . . e e e f f f f f f f e . . . 
+            . . e 4 4 e 2 2 2 2 2 f 4 . . . 
+            . . . e e e f f f f f f e . . . 
             . . . . . . . . . f f f . . . . 
             `],
         200,
@@ -4595,72 +4600,21 @@ function walk () {
         character,
         [img`
             . . . . . . . . . . . . . . . . 
-            . . . . . f f f f f f . . . . . 
-            . . . f f 2 2 2 2 2 2 f . . . . 
-            . . f f 2 2 2 2 2 2 2 2 f . . . 
-            . . f 2 2 2 2 2 2 2 2 2 f . . . 
-            . . f f f f 2 2 2 2 2 2 2 f . . 
-            . . f 2 2 2 2 f f f f 2 2 f . . 
-            . f f f f f f f f f f f f f . . 
-            . f f e f f f f f f f e e f . . 
-            . f e e 4 f f 1 8 d d e f . . . 
-            . . f e e e f e d d d f . . . . 
-            . . . . f 4 d d e 4 e f . . . . 
-            . . . . f e d d e 2 2 f . . . . 
-            . . . f f f e e f 5 5 f f . . . 
-            . . . f f f f f f f f f f . . . 
-            . . . . f f . . . f f f . . . . 
-            `,img`
-            . . . . . f f f f f f . . . . . 
-            . . . f f 2 2 2 2 2 2 f . . . . 
-            . . f f 2 2 2 2 2 2 2 2 f . . . 
-            . . f 2 2 2 2 2 2 2 2 2 f . . . 
-            . . f f f f 2 2 2 2 2 2 2 f . . 
-            . . f 2 2 2 2 f f f f 2 2 f . . 
-            . f f f f f f f f f f f f f . . 
-            . f f e f f f f f f f e e f . . 
-            . f e e 4 f f 1 8 d d e f f . . 
-            . . f e e e f d d d d f d d f . 
-            . . . f f e e 4 e e e f b b f . 
-            . . . . f 2 2 2 4 d d e b b f . 
-            . . . . e 2 2 2 e d d e b f . . 
-            . . . . f 4 4 4 f e e f f . . . 
-            . . . . . f f f f f f . . . . . 
-            . . . . . . f f f . . . . . . . 
-            `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . f f f f f f . . . . . 
-            . . . f f 2 2 2 2 2 2 f . . . . 
-            . . f f 2 2 2 2 2 2 2 2 f . . . 
-            . . f 2 2 2 2 2 2 2 2 2 f . . . 
-            . . f f f f 2 2 2 2 2 2 2 f . . 
-            . . f 2 2 2 2 f f f f 2 2 f . . 
-            . f f f f f f f f f f f f f . . 
-            . f f e f f f f f f f e e f . . 
-            . f e e 4 f f 1 8 d d e f . . . 
-            . . f e e e f e d d d f . . . . 
-            . . . . f 4 d d e 4 e f . . . . 
-            . . . . f e d d e 2 2 f . . . . 
-            . . . f f f e e f 5 5 f f . . . 
-            . . . f f f f f f f f f f . . . 
-            . . . . f f . . . f f f . . . . 
-            `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . f f f f f f . . . . . 
-            . . . f f 2 2 2 2 f 2 f . . . . 
-            . . f f 2 2 2 2 2 2 2 2 f . . . 
-            . . f 2 2 2 2 2 2 2 2 2 f . . . 
-            . . f f f f 2 2 2 2 2 2 2 f . . 
-            . . f 2 2 2 2 f f f f 2 2 f . . 
-            . f f f f f f f f f f f f f . . 
-            . f f e f f f f f f f e e f . . 
-            . f e e 4 f f 1 8 d d e f f . . 
-            . . f e e e f d d d d f d d f . 
-            . . . . f e e 4 e e e f b b f . 
-            . . . . f 2 2 2 4 d d e b b f . 
-            . . . f f 4 4 4 e d d e b f . . 
-            . . . f f f f f f e e f f . . . 
-            . . . . f f . . . f f f . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
             `],
         200,
         true
@@ -4669,73 +4623,22 @@ function walk () {
         animation.runImageAnimation(
         character,
         [img`
-            . . . . . . f f f f . . . . . . 
-            . . . . f f f 2 2 f f f . . . . 
-            . . . f f f 2 2 2 2 f f f . . . 
-            . . f f f e e e e e e f f f . . 
-            . . f f e 2 2 2 2 2 2 e e f . . 
-            . . f e 2 f f f f f f 2 e f . . 
-            . . f f f f e e e e f f f f . . 
-            . f f e f b f 4 4 f b f e f f . 
-            . f e e 4 1 f d d f 1 4 e e f . 
-            . . f e e d d d d d d e e f . . 
-            . . . f e e 4 4 4 4 e e f . . . 
-            . . e 4 f 2 2 2 2 2 2 f 4 e . . 
-            . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-            . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
-            . . . . . f f f f f f . . . . . 
-            . . . . . f f . . f f . . . . . 
-            `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f . . . . . . 
-            . . . . f f f 2 2 f f f . . . . 
-            . . . f f f 2 2 2 2 f f f . . . 
-            . . f f f e e e e e e f f f . . 
-            . . f f e 2 2 2 2 2 2 e e f . . 
-            . f f e 2 f f f f f f 2 e f f . 
-            . f f f f f e e e e f f f f f . 
-            . . f e f b f 4 4 f b f e f . . 
-            . . f e 4 1 f d d f 1 4 e f . . 
-            . . . f e 4 d d d d 4 e f e . . 
-            . . f e f 2 2 2 2 e d d 4 e . . 
-            . . e 4 f 2 2 2 2 e d d e . . . 
-            . . . . f 4 4 5 5 f e e . . . . 
-            . . . . f f f f f f f . . . . . 
-            . . . . f f f . . . . . . . . . 
-            `,img`
-            . . . . . . f f f f . . . . . . 
-            . . . . f f f 2 2 f f f . . . . 
-            . . . f f f 2 2 2 2 f f f . . . 
-            . . f f f e e e e e e f f f . . 
-            . . f f e 2 2 2 2 2 2 e e f . . 
-            . . f e 2 f f f f f f 2 e f . . 
-            . . f f f f e e e e f f f f . . 
-            . f f e f b f 4 4 f b f e f f . 
-            . f e e 4 1 f d d f 1 4 e e f . 
-            . . f e e d d d d d d e e f . . 
-            . . . f e e 4 4 4 4 e e f . . . 
-            . . e 4 f 2 2 2 2 2 2 f 4 e . . 
-            . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-            . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
-            . . . . . f f f f f f . . . . . 
-            . . . . . f f . . f f . . . . . 
-            `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f . . . . . . 
-            . . . . f f f 2 2 f f f . . . . 
-            . . . f f f 2 2 2 2 f f f . . . 
-            . . f f f e e e e e e f f f . . 
-            . . f e e 2 2 2 2 2 2 e f f . . 
-            . f f e 2 f f f f f f 2 e f f . 
-            . f f f f f e e e e f f f f f . 
-            . . f e f b f 4 4 f b f e f . . 
-            . . f e 4 1 f d d f 1 4 e f . . 
-            . . e f e 4 d d d d 4 e f . . . 
-            . . e 4 d d e 2 2 2 2 f e f . . 
-            . . . e d d e 2 2 2 2 f 4 e . . 
-            . . . . e e f 5 5 4 4 f . . . . 
-            . . . . . f f f f f f f . . . . 
-            . . . . . . . . . f f f . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
             `],
         200,
         true
@@ -4744,17 +4647,17 @@ function walk () {
         animation.runImageAnimation(
         character,
         [img`
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e e f f . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . f f f f f f f . . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . . 4 4 4 8 6 e f f . . . . . 
+            . . . 4 4 4 8 9 4 4 f . . . . . 
+            . . . 4 4 4 4 4 4 4 4 . . . . . 
+            . . . 4 4 4 4 4 4 4 4 . . . . . 
             . . . f 2 2 2 e d d 4 . . . . . 
             . . . f 2 2 2 e d d e . . . . . 
             . . . f 5 5 4 f e e f . . . . . 
@@ -4762,33 +4665,33 @@ function walk () {
             . . . . . . f f f . . . . . . . 
             `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d e e e e e f . . . 
-            . . . f e 4 e d d 4 f . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . f f f f f f f . . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . . 4 4 4 8 6 4 4 4 . . . . . 
+            . . . 4 4 4 8 9 4 4 4 . . . . . 
+            . . . 4 4 4 4 e e 4 4 . . . . . 
+            . . . 4 4 4 e d d e 4 . . . . . 
             . . . f 2 2 e d d e f . . . . . 
             . . f f 5 5 f e e f f f . . . . 
             . . f f f f f f f f f f . . . . 
             . . . f f f . . . f f . . . . . 
             `,img`
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e e f f . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . f f f f f f f . . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . . 4 4 4 8 6 e f f . . . . . 
+            . . . 4 4 4 8 9 4 4 f . . . . . 
+            . . . 4 4 4 4 4 4 4 4 . . . . . 
+            . . . 4 4 4 4 4 4 4 4 . . . . . 
             . . . f 2 2 2 e d d 4 . . . . . 
             . . . f 2 2 2 e d d e . . . . . 
             . . . f 5 5 4 f e e f . . . . . 
@@ -4796,19 +4699,19 @@ function walk () {
             . . . . . . f f f . . . . . . . 
             `,img`
             . . . . . . . . . . . . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e d d 4 . . . . 
-            . . . f 2 2 2 2 e d d e . . . . 
-            . . f f 5 5 4 4 f e e f . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . f f f f f f f . . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . f f f f f f f f f . . . . . 
+            . . . 4 4 4 8 6 4 4 4 . . . . . 
+            . . . 4 4 4 8 9 4 4 4 . . . . . 
+            . . . 4 4 4 4 e e 4 4 . . . . . 
+            . . . 4 4 4 e d d e 4 . . . . . 
+            . . . f 2 2 e d d e f . . . . . 
+            . . f f 5 5 f e e f f f . . . . 
             . . f f f f f f f f f f . . . . 
             . . . f f f . . . f f . . . . . 
             `],
@@ -4835,30 +4738,50 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         walk()
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+	
+})
 let moving = false
 let lastDirection = 0
+let sword_on_ground: Sprite = null
 let doodywolf: Sprite = null
 let character: Sprite = null
 let doodyWolfFightOn = false
-let hearts: Sprite = null
-let health = 0
 let Farmfire2: Sprite = null
 let FarmFire: Sprite = null
 let isEventActive = false
 let screen1: Sprite = null
 let screen2on = false
-let beginYesNo2 = false
-let beginYesNo = false
-let startscreen = false
-let startscreen2 = false
+let groundSwordPickedUp = false
 let screen2: Sprite = null
+let startscreen2 = false
+let startscreen = false
+let beginYesNo = false
+let beginYesNo2 = false
 let screen1on = 1
 screen2on = true
 if (screen1on == 1) {
     screen1 = sprites.create(assets.image`Lycanthropy Title screen`, SpriteKind.TitleScreen)
     animation.runImageAnimation(
     screen1,
-    assets.animation`lycanthropy title screen animation`,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
     300,
     true
     )
@@ -4883,12 +4806,12 @@ if (startscreen2 = true) {
     game.setDialogTextColor(2)
     game.showLongText("I am not human.", DialogLayout.Top)
     game.setDialogTextColor(1)
-    game.splash("Now, may ! begin?")
+    game.splash("Now, may I begin?")
     beginYesNo2 = true
     if (beginYesNo2 = true) {
         game.splash("press 'a' to continue?")
         if (controller.player1.isPressed(ControllerButton.A) && beginYesNo2 == true) {
-            game.splash("alright, then we", "shall begin")
+            game.splash("alright, then I", "shall begin my story.")
             color.startFade(color.originalPalette, color.Black, 2000)
             color.pauseUntilFadeDone()
             scene.setBackgroundImage(assets.image`Lycanthropy Title screen3`)
@@ -5043,35 +4966,36 @@ if (startscreen2 = true) {
             pause(1005)
             game.showLongText("So now I will give you the curse given to me so very long ago.", DialogLayout.Bottom)
             color.startFade(color.originalPalette, color.White, 500)
-            health = 20
             pause(500)
-            tiles.setCurrentTilemap(tilemap`level2`)
-            hearts = sprites.create(assets.image`hearts`, SpriteKind.Player)
-            hearts.setPosition(0, 0)
+            tiles.setCurrentTilemap(tilemap`level1`)
+            info.setLife(20)
             doodyWolfFightOn = true
             character = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
-                . . . . . . f f f f . . . . . . 
-                . . . . f f 2 2 2 2 f f . . . . 
-                . . . f 2 2 2 2 2 2 2 2 f . . . 
-                . . f 2 2 2 2 2 2 2 2 2 2 f . . 
-                . . f 2 2 2 2 2 2 2 2 2 2 f . . 
-                . f f 2 2 2 2 2 2 2 2 2 2 2 f . 
-                . f 2 2 2 f f f f f f 2 2 2 f . 
-                . . . f f f f f 4 9 f f f f . . 
-                . . . e f 1 8 d d 8 1 4 e f . . 
-                . . . f e 4 d d d d 4 e f e . . 
-                . . f e f 2 2 2 2 e d d 4 e . . 
-                . . e 4 f 2 2 2 2 e d d e . . . 
-                . . . . f 4 4 5 5 f e e . . . . 
-                . . . . f f f f f f f . . . . . 
-                . . . . f f f . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . f f f f f f . . . . . 
+                . . . . f f f f f f f f . . . . 
+                . . . . f f f f f f f f . . . . 
+                . . . . f f f f 4 8 6 f . . . . 
+                . . . . f 9 8 4 4 8 9 4 . . . . 
+                . . . . 4 4 4 4 4 4 4 4 . . . . 
+                . . . e 4 4 4 4 4 4 4 4 f . . . 
+                . . e 4 f 2 2 2 2 2 2 f 4 e . . 
+                . . 4 d f 2 2 2 2 2 2 f d 4 . . 
+                . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
+                . . . . . f f f f f f . . . . . 
+                . . . . . f f . . f f . . . . . 
                 `, SpriteKind.Player)
             controller.moveSprite(character, 75, 75)
             color.startFade(color.White, color.originalPalette, 500)
             scene.cameraFollowSprite(character)
-            character.setPosition(68, 54)
+            character.setPosition(18, 18)
             doodywolf = sprites.create(assets.image`doody wolf sprite`, SpriteKind.Enemy)
+            sword_on_ground = sprites.create(assets.image`myImage2`, SpriteKind.ground_loot)
+            character.setPosition(65, 18)
+            doodywolf.setPosition(131, 83)
             doodywolf.follow(character, 30)
             if (character.overlapsWith(doodywolf)) {
             	
